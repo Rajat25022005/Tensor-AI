@@ -1,0 +1,79 @@
+[project]
+name = "tensorai-backend"
+version = "0.1.0"
+description = "TensorAI — Autonomous Business Intelligence Platform Backend"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.10"
+authors = [
+    { name = "Aditya Rao" },
+]
+
+dependencies = [
+    "fastapi>=0.110.0,<1.0.0",
+    "uvicorn[standard]>=0.27.0,<1.0.0",
+    "python-dotenv>=1.0.0,<2.0.0",
+    "pydantic>=2.6.0,<3.0.0",
+    "pydantic-settings>=2.1.0,<3.0.0",
+    "langchain>=0.2.0,<1.0.0",
+    "langgraph>=0.1.0,<1.0.0",
+    "langchain-community>=0.2.0,<1.0.0",
+    "neo4j>=5.17.0,<6.0.0",
+    "chromadb>=0.4.24,<1.0.0",
+    "qdrant-client>=1.8.0,<2.0.0",
+    "python-multipart>=0.0.9",
+    "httpx>=0.27.0,<1.0.0",
+    "python-jose[cryptography]>=3.3.0,<4.0.0",
+    "passlib[bcrypt]>=1.7.0,<2.0.0",
+    "bcrypt>=4.1.0,<5.0.0",
+    "redis>=5.0.0,<6.0.0",
+    "celery>=5.3.0,<6.0.0",
+    "python-socketio>=5.11.0,<6.0.0",
+    "structlog>=24.1.0",
+    "tenacity>=8.2.0,<9.0.0",
+    "pypdf>=4.0.0,<5.0.0",
+    "tiktoken>=0.6.0",
+    "sentence-transformers>=2.5.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0.0,<9.0.0",
+    "pytest-asyncio>=0.23.0,<1.0.0",
+    "pytest-cov>=4.1.0,<5.0.0",
+    "pytest-mock>=3.12.0,<4.0.0",
+    "httpx>=0.27.0,<1.0.0",
+    "ruff>=0.3.0",
+    "mypy>=1.8.0",
+    "pre-commit>=3.6.0",
+    "factory-boy>=3.3.0,<4.0.0",
+    "faker>=23.0.0",
+]
+
+[build-system]
+requires = ["setuptools>=69.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.ruff]
+target-version = "py310"
+line-length = 100
+
+[tool.ruff.lint]
+select = ["E", "W", "F", "I", "N", "UP", "S", "B", "A", "C4", "RUF"]
+ignore = ["S101", "B008"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.mypy]
+python_version = "3.10"
+strict = true
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+addopts = "-v --cov=app --cov-report=term-missing"
+filterwarnings = ["ignore::DeprecationWarning"]

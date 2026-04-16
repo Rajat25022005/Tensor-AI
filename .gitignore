@@ -205,3 +205,17 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# ── Node.js / Frontend ──────────────────────────────────────────────
+node_modules/
+dist/
+.vite/
+*.tsbuildinfo
+
+# ── TensorAI Specific ───────────────────────────────────────────────
+*.db
+*.sqlite
+chroma_data/
+neo4j_data/
+uploads/
+.DS_Store
