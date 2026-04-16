@@ -1,0 +1,121 @@
+.file-upload-container {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.file-upload-dropzone {
+  padding: 3rem;
+  border-radius: var(--radius-lg);
+  text-align: center;
+  cursor: pointer;
+  border: 2px dashed var(--border-subtle);
+  transition: all var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.file-upload-dropzone:hover, .file-upload-dropzone.dragging {
+  border-color: var(--color-primary);
+  background: var(--surface-glass-hover);
+}
+
+.upload-icon {
+  color: var(--color-primary);
+  margin-bottom: 16px;
+  stroke-width: 1.5;
+}
+
+.upload-text {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+}
+
+.upload-browse {
+  color: var(--color-primary);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  transition: var(--transition-fast);
+}
+
+.file-upload-dropzone:hover .upload-browse {
+  text-decoration-color: var(--color-primary);
+}
+
+.upload-hint {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.file-preview {
+  display: flex;
+  align-items: center;
+  padding: 16px;
+  border-radius: var(--radius-md);
+  gap: 16px;
+}
+
+.file-icon {
+  color: var(--color-accent);
+}
+
+.file-details {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.file-name {
+  font-weight: 500;
+  color: var(--text-main);
+  font-size: 0.9rem;
+}
+
+.file-size {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.btn-upload {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  border: none;
+  border-radius: var(--radius-sm);
+  padding: 8px 16px;
+  font-weight: 600;
+  transition: all var(--transition-fast);
+}
+
+.btn-upload:hover {
+  background: var(--color-accent);
+}
+
+.upload-alert {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.upload-alert.success {
+  border-left: 4px solid var(--color-accent);
+  color: var(--color-primary);
+}
+
+.upload-alert.error {
+  border-left: 4px solid #ef4444;
+  color: #ef4444;
+}
+
+.text-primary {
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: 0.875rem;
+}

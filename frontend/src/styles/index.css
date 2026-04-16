@@ -1,30 +1,48 @@
 :root {
-  /* ── Color Palette ──────────────────────────────────────────────── */
-  --color-bg-primary: #0a0a0f;
-  --color-bg-secondary: #12121a;
-  --color-bg-tertiary: #1a1a28;
-  --color-bg-card: rgba(255, 255, 255, 0.03);
-  --color-bg-card-hover: rgba(255, 255, 255, 0.06);
+  /* ── Color Palette ───────────────────────────────────────── */
+  --color-bg: #091413;
+  --color-sidebar: #0b1a18;
+  --color-surface: #285A48;
+  --color-accent: #408A71;
+  --color-primary: #B0E4CC;
+  
+  /* ── Surface Alphas ──────────────────────────────────────── */
+  --bg-glass: rgba(9, 20, 19, 0.8);
+  --surface-glass: rgba(40, 90, 72, 0.12);
+  --surface-glass-hover: rgba(40, 90, 72, 0.2);
+  --border-subtle: rgba(176, 228, 204, 0.08);
+  --border-active: rgba(176, 228, 204, 0.25);
+  
+  /* ── Text ────────────────────────────────────────────────── */
+  --text-main: #f0fdf9;
+  --text-dim: #bbf7d080;
+  --text-muted: rgba(176, 228, 204, 0.4);
 
-  --color-border: rgba(255, 255, 255, 0.08);
-  --color-border-active: rgba(139, 92, 246, 0.4);
+  /* Fallbacks to map old vars partially */
+  --color-bg-primary: var(--color-bg);
+  --color-bg-secondary: var(--color-sidebar);
+  --color-bg-tertiary: var(--surface-glass);
+  --color-bg-card: var(--surface-glass);
+  --color-bg-card-hover: var(--surface-glass-hover);
 
-  --color-text-primary: #f0f0f5;
-  --color-text-secondary: #9ca3af;
-  --color-text-muted: #6b7280;
+  --color-border: var(--border-subtle);
+  --color-border-active: var(--border-active);
 
-  --color-accent-purple: #8b5cf6;
-  --color-accent-blue: #3b82f6;
-  --color-accent-cyan: #06b6d4;
-  --color-accent-green: #10b981;
-  --color-accent-amber: #f59e0b;
+  --color-text-primary: var(--text-main);
+  --color-text-secondary: var(--text-dim);
+  --color-text-muted: var(--text-muted);
+
+  --color-accent-purple: var(--color-primary); /* Use primary for previous purple accents */
+  --color-accent-blue: var(--color-accent);
   --color-accent-red: #ef4444;
+  --color-accent-green: #4ade80;
 
-  --gradient-primary: linear-gradient(135deg, #8b5cf6, #3b82f6);
-  --gradient-glow: linear-gradient(135deg, rgba(139, 92, 246, 0.15), rgba(59, 130, 246, 0.15));
+  --gradient-primary: linear-gradient(135deg, var(--color-accent), var(--color-primary));
+  --gradient-glow: linear-gradient(135deg, rgba(64, 138, 113, 0.15), rgba(176, 228, 204, 0.15));
 
   /* ── Typography ─────────────────────────────────────────────────── */
-  --font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
   --font-size-xs: 0.75rem;
   --font-size-sm: 0.875rem;
   --font-size-base: 1rem;
@@ -45,9 +63,9 @@
   --space-12: 3rem;
 
   /* ── Borders & Radius ───────────────────────────────────────────── */
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 16px;
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
   --radius-xl: 24px;
   --radius-full: 9999px;
 
@@ -55,7 +73,7 @@
   --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
   --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
   --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.5);
-  --shadow-glow: 0 0 30px rgba(139, 92, 246, 0.15);
+  --shadow-glow: 0 0 12px var(--color-primary);
 
   /* ── Transitions ────────────────────────────────────────────────── */
   --transition-fast: 150ms ease;
@@ -63,7 +81,7 @@
   --transition-slow: 400ms ease;
 
   /* ── Layout ─────────────────────────────────────────────────────── */
-  --sidebar-width: 260px;
+  --sidebar-width: 280px;
   --header-height: 64px;
 }
 
@@ -84,20 +102,20 @@ html {
 
 body {
   font-family: var(--font-family);
-  background-color: var(--color-bg-primary);
-  color: var(--color-text-primary);
+  background-color: var(--color-bg);
+  color: var(--text-main);
   line-height: 1.6;
   min-height: 100vh;
 }
 
 a {
-  color: var(--color-accent-purple);
+  color: var(--color-primary);
   text-decoration: none;
   transition: color var(--transition-fast);
 }
 
 a:hover {
-  color: var(--color-accent-blue);
+  color: var(--color-accent);
 }
 
 button {
@@ -111,26 +129,27 @@ input,
 textarea,
 select {
   font-family: var(--font-family);
-  background: var(--color-bg-tertiary);
-  border: 1px solid var(--color-border);
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-subtle);
   border-radius: var(--radius-md);
-  color: var(--color-text-primary);
-  padding: var(--space-3) var(--space-4);
+  color: var(--text-main);
+  padding: var(--space-2) var(--space-3);
   font-size: var(--font-size-sm);
-  transition: border-color var(--transition-fast);
+  transition: all var(--transition-fast);
+  outline: none;
 }
 
 input:focus,
 textarea:focus,
 select:focus {
-  border-color: var(--color-border-active);
-  outline: none;
+  border-color: var(--color-primary);
+  background: rgba(0, 0, 0, 0.3);
 }
 
 /* ── Scrollbar ─────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -138,20 +157,20 @@ select:focus {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: var(--radius-full);
+  background: var(--border-subtle);
+  border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: rgba(255, 255, 255, 0.2);
+  background: var(--color-accent);
 }
 
 /* ── Utility Classes ───────────────────────────────────────────────── */
 .glass {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid var(--color-border);
+  background: var(--surface-glass);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--border-subtle);
 }
 
 .gradient-text {

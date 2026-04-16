@@ -1,48 +1,20 @@
-.dashboard__title {
-  font-size: var(--font-size-3xl);
+.dashboard-page {
+  animation: fade-in var(--transition-base) forwards;
+}
+
+.page-header {
+  margin-bottom: 24px;
+}
+
+.page-title {
+  font-size: 1.5rem;
   font-weight: 700;
-  margin-bottom: var(--space-2);
+  color: var(--text-main);
+  letter-spacing: -0.02em;
 }
 
-.dashboard__subtitle {
-  color: var(--color-text-secondary);
-  font-size: var(--font-size-lg);
-  margin-bottom: var(--space-10);
-}
-
-.dashboard__grid {
+.dashboard-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: var(--space-6);
-}
-
-.dashboard__card {
-  padding: var(--space-6);
-  border-radius: var(--radius-lg);
-  transition: all var(--transition-base);
-}
-
-.dashboard__card:hover {
-  background: var(--color-bg-card-hover);
-  box-shadow: var(--shadow-glow);
-  transform: translateY(-2px);
-}
-
-.dashboard__card-icon {
-  font-size: var(--font-size-2xl);
-  display: block;
-  margin-bottom: var(--space-3);
-}
-
-.dashboard__card-title {
-  font-size: var(--font-size-sm);
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  margin-bottom: var(--space-2);
-}
-
-.dashboard__card-value {
-  font-size: var(--font-size-2xl);
-  font-weight: 700;
-  color: var(--color-text-primary);
+  grid-template-columns: repeat(12, 1fr);
+  gap: 20px;
 }

@@ -1,37 +1,44 @@
+import { useEffect } from "react";
+import { useDashboardStore } from "../stores/dashboardStore";
+import StatPanel from "../components/dashboard/StatPanel";
+import GraphTopology from "../components/dashboard/GraphTopology";
+import ReasoningLog from "../components/dashboard/ReasoningLog";
 import "./Dashboard.css";
 
 function Dashboard() {
-  return (
-    <div className="dashboard" id="dashboard-page">
-      <h1 className="dashboard__title">
-        Welcome to <span className="gradient-text">TensorAI</span>
-      </h1>
-      <p className="dashboard__subtitle">
-        Your autonomous business intelligence platform
-      </p>
+  const { stats, recentLogs, fetchDashboardData } = useDashboardStore();
 
-      <div className="dashboard__grid">
-        <div className="dashboard__card glass">
-          <span className="dashboard__card-icon">📄</span>
-          <h3 className="dashboard__card-title">Documents Indexed</h3>
-          <p className="dashboard__card-value">—</p>
-        </div>
-        <div className="dashboard__card glass">
-          <span className="dashboard__card-icon">🔗</span>
-          <h3 className="dashboard__card-title">Graph Entities</h3>
-          <p className="dashboard__card-value">—</p>
-        </div>
-        <div className="dashboard__card glass">
-          <span className="dashboard__card-icon">💬</span>
-          <h3 className="dashboard__card-title">Queries Processed</h3>
-          <p className="dashboard__card-value">—</p>
-        </div>
-        <div className="dashboard__card glass">
-          <span className="dashboard__card-icon">🧠</span>
-          <h3 className="dashboard__card-title">Agent Accuracy</h3>
-          <p className="dashboard__card-value">—</p>
-        </div>
+  useEffect(() => {
+    fetchDashboardData();
+  }, [fetchDashboardData]);
+
+  return (
+    <div className="dashboard-page">
+      <div className="page-header">
+        <h1 className="page-title">Executive Overview</h1>
       </div>
+
+      {stats && (
+        <div className="dashboard-grid">
+          <StatPanel 
+            title="TOTAL_GRAPH_NODES" 
+            value={stats.graphNodes} 
+            metaHtml={<><span style={{color: 'var(--color-primary)'}}>+{stats.graphNodesTrend}</span> vs last week</>} 
+          />
+          <StatPanel 
+            title="AGENT_CONFIDENCE" 
+            value={`${stats.agentConfidence}%`} 
+          />
+          <StatPanel 
+            title="VALIDATED_TRACES" 
+            value={stats.validatedTraces} 
+          />
+
+          {/* Lower section spanning multiple columns */}
+          <GraphTopology />
+          <ReasoningLog logs={recentLogs} />
+        </div>
+      )}
     </div>
   );
 }

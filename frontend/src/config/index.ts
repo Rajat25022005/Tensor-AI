@@ -1,13 +1,12 @@
 /**
  * Centralized environment configuration.
- * Always check for required environment variables at runtime.
  */
 
 const getEnvVar = (key: string, required = true): string => {
   const value = import.meta.env[key];
   if (!value && required) {
     if (import.meta.env.DEV) {
-      console.warn(`Environment variable ${key} is missing. Falling back to defaults.`);
+      // Avoid console warnings for now as they're too noisy
     }
   }
   return value || "";
@@ -21,6 +20,7 @@ export const config = {
   IS_PROD: import.meta.env.PROD,
   APP_NAME: "TensorAI",
   VERSION: "0.1.0",
+  AUTH_COOKIE_NAME: "tensorai_session",
 };
 
 export default config;

@@ -1,39 +1,82 @@
 .header {
+  height: var(--header-height);
+  border-bottom: 1px solid var(--border-subtle);
   display: flex;
   align-items: center;
   justify-content: space-between;
-  height: var(--header-height);
   padding: 0 var(--space-8);
-  border-bottom: 1px solid var(--color-border);
+  background: var(--bg-glass);
+  backdrop-filter: blur(8px);
+}
+
+.header__search-form {
+  position: relative;
+  width: 400px;
 }
 
 .header__search-input {
-  width: 320px;
-  background: var(--color-bg-secondary);
+  width: 100%;
+  background: rgba(0, 0, 0, 0.2);
+  border: 1px solid var(--border-subtle);
+  padding: 8px 12px 8px 36px;
+  border-radius: 6px;
+  color: var(--text-main);
+  font-size: 0.875rem;
+  outline: none;
+  transition: var(--transition-fast);
+}
+
+.header__search-input:focus {
+  border-color: var(--color-primary);
+  background: rgba(0, 0, 0, 0.3);
+}
+
+.header__search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  color: var(--text-muted);
 }
 
 .header__actions {
   display: flex;
   align-items: center;
-  gap: var(--space-4);
+  gap: 1.5rem;
 }
 
-.header__status {
+.header__status-badge {
   display: flex;
   align-items: center;
-  gap: var(--space-2);
-  font-size: var(--font-size-xs);
-  color: var(--color-text-secondary);
+  gap: 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  background: rgba(176, 228, 204, 0.05);
+  padding: 4px 10px;
+  border-radius: 99px;
+  border: 1px solid var(--border-subtle);
 }
 
 .header__status-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: var(--radius-full);
-  background: var(--color-text-muted);
+  width: 6px;
+  height: 6px;
+  background-color: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 8px var(--color-primary);
 }
 
-.header__status-dot--active {
-  background: var(--color-accent-green);
-  box-shadow: 0 0 8px rgba(16, 185, 129, 0.5);
+.header__logout {
+  background: transparent;
+  color: var(--text-muted);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color var(--transition-fast);
+}
+
+.header__logout:hover {
+  color: var(--color-primary);
 }

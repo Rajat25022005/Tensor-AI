@@ -58,6 +58,13 @@ export interface AuthToken {
   expires_in: number;
 }
 
+export interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: string;
+}
+
 /* ── Connector Types ───────────────────────────────────────────────── */
 
 export interface ConnectorStatus {
@@ -65,4 +72,41 @@ export interface ConnectorStatus {
   connector_type: string;
   is_connected: boolean;
   document_count: number;
+}
+
+export interface ConnectorConfig {
+  id: string;
+  type: string;
+  name: string;
+  status: 'connected' | 'disconnected' | 'error';
+  config: Record<string, any>;
+  lastSync?: string;
+}
+
+/* ── Dashboard Types ───────────────────────────────────────────────── */
+
+export interface DashboardStats {
+  graphNodes: number;
+  graphNodesTrend: number;
+  agentConfidence: number;
+  validatedTraces: number;
+  pendingTasks: number;
+}
+
+export interface SystemHealth {
+  status: string;
+  service: string;
+}
+
+export interface HealthStatus {
+  status: string;
+}
+
+export interface IngestionJob {
+  id: string;
+  filename: string;
+  status: "queued" | "processing" | "completed" | "failed";
+  progress: number;
+  startedAt: string;
+  completedAt?: string;
 }

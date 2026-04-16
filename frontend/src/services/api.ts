@@ -1,26 +1,20 @@
 import axios from "axios";
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || "/api/v1";
+import config from "../config";
 
 export const api = axios.create({
-  baseURL: API_BASE_URL,
+  baseURL: config.API_URL,
   headers: { "Content-Type": "application/json" },
   timeout: 30000,
+  withCredentials: true, // Crucial for httpOnly cookies
 });
 
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem("tensorai_token");
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
-  }
-  return config;
-});
-
+// Since we use httpOnly cookies, we don't attach the Authorization header manually.
+// We handle 401 Unauthorized errors to trigger logout/redirect.
 api.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem("tensorai_token");
+    if (error.response?.status === 401 && window.location.pathname !== "/login") {
+      // Don't redirect if we are already on the login page and get a 401
       window.location.href = "/login";
     }
     return Promise.reject(error);

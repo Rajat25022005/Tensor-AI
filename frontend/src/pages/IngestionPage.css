@@ -1,0 +1,89 @@
+.ingestion-page {
+  display: flex;
+  flex-direction: column;
+}
+
+.ingestion-layout {
+  display: flex;
+  gap: 32px;
+  margin-top: 32px;
+}
+
+.ingestion-main {
+  flex: 2;
+}
+
+.ingestion-sidebar {
+  flex: 1;
+  border-radius: var(--radius-lg);
+  display: flex;
+  flex-direction: column;
+}
+
+.pipeline-steps {
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.pipeline-step {
+  display: flex;
+  gap: 16px;
+  position: relative;
+}
+
+/* Connecting line */
+.pipeline-step:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  top: 30px;
+  bottom: -24px;
+  left: 14px;
+  width: 2px;
+  background: var(--surface-glass-hover);
+  z-index: 1;
+}
+
+.step-num {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.8rem;
+  font-weight: 700;
+  z-index: 2;
+  flex-shrink: 0;
+}
+
+.pipeline-step.active .step-num {
+  background: var(--color-primary);
+  color: var(--color-bg);
+  box-shadow: 0 0 10px rgba(176, 228, 204, 0.4);
+}
+
+.pipeline-step.pending .step-num {
+  background: var(--surface-glass-hover);
+  color: var(--text-muted);
+  border: 1px solid var(--border-subtle);
+}
+
+.step-details h4 {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 4px;
+}
+
+.step-details p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+.pipeline-step.pending .step-details h4,
+.pipeline-step.pending .step-details p {
+  color: var(--text-muted);
+}

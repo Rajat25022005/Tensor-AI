@@ -28,13 +28,13 @@ class ErrorBoundary extends Component<Props, State> {
         <div style={{
           padding: '2rem',
           textAlign: 'center',
-          background: 'var(--color-bg-secondary)',
+          background: 'var(--surface-glass)',
           borderRadius: 'var(--radius-lg)',
           margin: '2rem',
-          border: '1px solid var(--color-accent-red)'
+          border: '1px solid #ef4444'
         }}>
-          <h1 style={{ color: 'var(--color-accent-red)', marginBottom: '1rem' }}>Something went wrong</h1>
-          <p style={{ color: 'var(--color-text-secondary)', marginBottom: '1.5rem' }}>
+          <h1 style={{ color: '#ef4444', marginBottom: '1rem' }}>Something went wrong</h1>
+          <p style={{ color: 'var(--text-dim)', marginBottom: '1.5rem' }}>
             We've encountered an unexpected error. Please try refreshing the page.
           </p>
           <button
@@ -42,9 +42,11 @@ class ErrorBoundary extends Component<Props, State> {
             style={{
               padding: '0.75rem 1.5rem',
               background: 'var(--gradient-primary)',
-              color: 'white',
+              color: 'var(--color-bg)',
               borderRadius: 'var(--radius-md)',
-              fontWeight: 600
+              fontWeight: 600,
+              border: 'none',
+              cursor: 'pointer'
             }}
           >
             Refresh Page
@@ -53,8 +55,8 @@ class ErrorBoundary extends Component<Props, State> {
             <pre style={{
               marginTop: '2rem',
               padding: '1rem',
-              background: 'black',
-              color: '#ff5555',
+              background: 'rgba(0,0,0,0.3)',
+              color: '#ef4444',
               fontSize: '0.75rem',
               textAlign: 'left',
               overflowX: 'auto',
@@ -67,7 +69,7 @@ class ErrorBoundary extends Component<Props, State> {
       );
     }
 
-    return this.children;
+    return this.props.children;
   }
 }
 

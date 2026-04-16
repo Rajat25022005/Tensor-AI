@@ -1,0 +1,58 @@
+.graph-explore-link {
+  font-size: 0.75rem; 
+  color: var(--color-primary); 
+  text-decoration: none;
+  font-weight: 500;
+  transition: opacity var(--transition-fast);
+}
+
+.graph-explore-link:hover {
+  opacity: 0.8;
+}
+
+.graph-viz {
+  height: 340px;
+  background: radial-gradient(circle at center, rgba(64, 138, 113, 0.08) 0%, transparent 70%);
+  border-radius: var(--radius-lg);
+  border: 1px dashed var(--border-subtle);
+  position: relative;
+  overflow: hidden;
+}
+
+.node-circle {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background: var(--color-primary);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--color-primary);
+  z-index: 2;
+  transform: translate(-50%, -50%);
+  animation: pulse-node 4s infinite alternate;
+}
+
+@keyframes pulse-node {
+  0% { box-shadow: 0 0 8px var(--color-primary); }
+  100% { box-shadow: 0 0 15px var(--color-primary); }
+}
+
+.node-label {
+  position: absolute;
+  font-size: 0.65rem;
+  color: var(--text-muted);
+  margin-top: 8px; /* Offset from center */
+  transform: translateX(-50%);
+  white-space: nowrap;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.graph-edges {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0.1; 
+  stroke: var(--color-primary); 
+  stroke-width: 1;
+  z-index: 1;
+}
