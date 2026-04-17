@@ -1,4 +1,4 @@
-import { Mail, Slack, FileText, Database, Loader2 } from "lucide-react";
+import { Mail, Slack, FileText, Database, Loader2, Plug } from "lucide-react";
 import type { ConnectorConfig } from "../../types";
 import "./ConnectorCard.css";
 
