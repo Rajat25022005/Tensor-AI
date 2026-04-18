@@ -6,13 +6,13 @@ TensorAI follows a **layered architecture** with clear separation between data i
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                        Frontend (React)                            │
+│                        Frontend (React)                             │
 │  Dashboard │ Query Interface │ Graph Explorer │ Ingestion │ Settings│
 └────────────────────────────┬────────────────────────────────────────┘
                              │  REST / WebSocket
 ┌────────────────────────────▼────────────────────────────────────────┐
 │                     API Layer (FastAPI v1)                          │
-│            /health │ /auth │ /query │ /ingest │ /connectors        │
+│            /health │ /auth │ /query │ /ingest │ /connectors         │
 ├─────────────────────────────────────────────────────────────────────┤
 │                     Middleware                                      │
 │              Rate Limiting │ Request Logging │ CORS                 │
@@ -21,25 +21,25 @@ TensorAI follows a **layered architecture** with clear separation between data i
 ┌────────────────────────────▼────────────────────────────────────────┐
 │                   Multi-Agent Core                                  │
 │                                                                     │
-│   ┌──────────┐  ┌───────────┐  ┌──────────┐  ┌───────────┐        │
-│   │  Planner  │→│ Retriever │→│ Executor  │→│ Validator  │        │
-│   └──────────┘  └───────────┘  └──────────┘  └───────────┘        │
+│   ┌──────────┐  ┌───────────┐  ┌──────────┐  ┌───────────┐          │
+│   │ Planner  │→│ Retriever  │→ │Executor  │→ │Validator  │          │
+│   └──────────┘  └───────────┘  └──────────┘  └───────────┘          │
 │                      ↑ retry on validation failure                  │
 └────────────────────────────┬────────────────────────────────────────┘
                              │
 ┌────────────────────────────▼────────────────────────────────────────┐
 │                    Memory Layer                                     │
 │                                                                     │
-│   ┌────────────────┐  ┌──────────────┐  ┌───────────────────┐      │
-│   │  Graph Memory   │  │ Vector Store │  │ Hybrid Retriever  │      │
-│   │  (Neo4j)        │  │ (ChromaDB /  │  │ graph + vector    │      │
-│   │                 │  │  Qdrant)     │  │ fusion            │      │
-│   └────────────────┘  └──────────────┘  └───────────────────┘      │
+│   ┌────────────────┐  ┌──────────────┐  ┌───────────────────┐       │
+│   │  Graph Memory  │  │ Vector Store │ │ Hybrid Retriever   │       │
+│   │  (Neo4j)       │  │ (ChromaDB /  │ │ graph + vector     │       │
+│   │                │  │  Qdrant)     |  │ fusion            │       │
+│   └────────────────┘  └──────────────┘  └───────────────────┘       │
 └────────────────────────────┬────────────────────────────────────────┘
                              │
 ┌────────────────────────────▼────────────────────────────────────────┐
 │                   Services                                          │
-│   Ingestion Pipeline │ Chunker │ Embedder │ LLM │ Entity Extractor │
+│   Ingestion Pipeline │ Chunker │ Embedder │ LLM │ Entity Extractor  │
 └────────────────────────────┬────────────────────────────────────────┘
                              │
 ┌────────────────────────────▼────────────────────────────────────────┐
@@ -49,7 +49,7 @@ TensorAI follows a **layered architecture** with clear separation between data i
                              │
 ┌────────────────────────────▼────────────────────────────────────────┐
 │                Infrastructure                                       │
-│   Docker Compose │ Redis (Celery) │ Neo4j │ ChromaDB │ Ollama      │
+│   Docker Compose │ Redis (Celery) │ Neo4j │ ChromaDB │ Ollama       │
 └─────────────────────────────────────────────────────────────────────┘
 ```
 

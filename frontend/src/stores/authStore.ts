@@ -13,37 +13,38 @@ interface AuthState {
   checkSession: () => Promise<boolean>;
 }
 
-// Fallback dummy user for demo purposes if backend isn't ready
-const DEMO_USER: User = { id: "1", email: "admin@tensorai.dev", name: "Tensor Admin", role: "admin" };
-
 export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   isAuthenticated: false,
-  isLoading: true, // Start true while we check initial session
+  isLoading: true,
   error: null,
 
   login: async (credentials: LoginCredentials) => {
     set({ isLoading: true, error: null });
     try {
-      // In a real app we'd wait for backend response which sets httpOnly cookie
       const res = await api.post("/auth/login", credentials);
       if (res.status === 200) {
-        set({ user: DEMO_USER, isAuthenticated: true, isLoading: false });
+        // Login sets httpOnly cookie. Now fetch user profile.
+        const meRes = await api.get("/auth/me");
+        set({ 
+          user: meRes.data as User, 
+          isAuthenticated: true, 
+          isLoading: false 
+        });
         return true;
       }
+      set({ error: "Login failed", isLoading: false });
       return false;
-    } catch (err) {
-      // Fallback for demo: if backend is off, let any login pass
-      console.warn("Auth backend down, falling back to demo login.");
-      set({ user: DEMO_USER, isAuthenticated: true, isLoading: false });
-      return true;
+    } catch (err: any) {
+      const message = err.response?.data?.detail || "Invalid email or password";
+      set({ error: message, isLoading: false, isAuthenticated: false });
+      return false;
     }
   },
 
   logout: async () => {
     set({ isLoading: true });
     try {
-      // Backend routes should clear the httpOnly cookie
       await api.post("/auth/logout");
     } catch {
       // Ignore errors on logout
@@ -55,16 +56,15 @@ export const useAuthStore = create<AuthState>((set) => ({
   checkSession: async () => {
     set({ isLoading: true });
     try {
-      // Call a generic protected endpoint or an /auth/me endpoint 
-      // If we get a 200, the httpOnly cookie is valid
-      const res = await api.get("/health"); 
-      if (res.status === 200) {
-        set({ user: DEMO_USER, isAuthenticated: true, isLoading: false });
+      const res = await api.get("/auth/me");
+      if (res.status === 200 && res.data.id) {
+        set({ user: res.data as User, isAuthenticated: true, isLoading: false });
         return true;
       }
+      set({ user: null, isAuthenticated: false, isLoading: false });
       return false;
-    } catch (err) {
-      // If backend gives 401 or network error
+    } catch {
+      // No valid session — not logged in
       set({ user: null, isAuthenticated: false, isLoading: false });
       return false;
     }

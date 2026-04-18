@@ -13,6 +13,8 @@ const getEnvVar = (key: string, required = true): string => {
 };
 
 export const config = {
+  // In development, the Vite proxy handles /api/v1 → localhost:8000
+  // In production, VITE_API_URL should be set to the backend URL
   API_URL: getEnvVar("VITE_API_URL") || "/api/v1",
   WS_URL: getEnvVar("VITE_WS_URL") || "ws://localhost:8000",
   ENVIRONMENT: import.meta.env.MODE || "development",

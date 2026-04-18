@@ -77,7 +77,7 @@ function LoginPage() {
         </form>
         
         <div className="login-footer">
-          <p>Demo Mode: Any credentials will work if backend is disconnected.</p>
+          <p>Default: admin@tensorai.dev / admin1234</p>
         </div>
       </div>
     </div>

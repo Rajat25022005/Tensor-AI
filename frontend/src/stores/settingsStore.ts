@@ -2,32 +2,6 @@ import { create } from "zustand";
 import { api } from "../services/api";
 import type { ConnectorConfig } from "../types";
 
-// Mock initial data if backend is offline
-const DEMO_CONNECTORS: ConnectorConfig[] = [
-  {
-    id: "pdf-1",
-    type: "pdf",
-    name: "Local PDF Ingestion",
-    status: "connected",
-    config: { directory: "/data/docs" },
-    lastSync: new Date().toISOString(),
-  },
-  {
-    id: "gmail-1",
-    type: "gmail",
-    name: "Support Inbox",
-    status: "disconnected",
-    config: { email: "support@tensorai.demo" },
-  },
-  {
-    id: "slack-1",
-    type: "slack",
-    name: "Engineering Slack",
-    status: "disconnected",
-    config: { workspace: "tensor-eng" },
-  },
-];
-
 interface LLMConfig {
   model: string;
   temperature: number;
@@ -45,7 +19,7 @@ interface SettingsState {
 }
 
 export const useSettingsStore = create<SettingsState>((set, get) => ({
-  connectors: DEMO_CONNECTORS,
+  connectors: [],
   llmConfig: {
     model: "mistral",
     temperature: 0.1,
@@ -57,40 +31,63 @@ export const useSettingsStore = create<SettingsState>((set, get) => ({
   fetchConnectors: async () => {
     set({ isLoading: true, error: null });
     try {
-      // In a real implementation this would fetch from backend
-      // const response = await api.get("/connectors");
-      // set({ connectors: response.data, isLoading: false });
+      const response = await api.get("/connectors/");
+      const backendConnectors = response.data.connectors || [];
       
-      // Simulate network request
-      await new Promise(resolve => setTimeout(resolve, 500));
-      set({ isLoading: false });
+      // Map backend connector metadata to frontend ConnectorConfig shape
+      const mapped: ConnectorConfig[] = backendConnectors.map((c: any, i: number) => ({
+        id: `${c.connector_type}-${i + 1}`,
+        type: c.connector_type,
+        name: c.name,
+        status: c.is_connected ? "connected" as const : "disconnected" as const,
+        config: {},
+        lastSync: c.is_connected ? new Date().toISOString() : undefined,
+      }));
+      
+      set({ connectors: mapped, isLoading: false });
     } catch (err) {
-      set({ error: (err as Error).message, isLoading: false });
+      console.warn("Connectors API failed.", err);
+      set({ 
+        connectors: [],
+        error: "Could not load connectors",
+        isLoading: false 
+      });
     }
   },
 
   toggleConnectorStatus: async (id: string) => {
     set({ isLoading: true, error: null });
     try {
-      // Simulate backend toggle
-      await new Promise(resolve => setTimeout(resolve, 600));
-      const newConnectors = get().connectors.map(c => {
-        if (c.id === id) {
-          return { ...c, status: c.status === "connected" ? "disconnected" as const : "connected" as const, lastSync: new Date().toISOString() };
-        }
-        return c;
-      });
-      set({ connectors: newConnectors, isLoading: false });
-    } catch (err) {
-      set({ error: (err as Error).message, isLoading: false });
+      // Extract connector type name from the id (e.g., "pdf-1" → "pdf")
+      const connectorName = id.split("-")[0];
+      
+      await api.post("/connectors/toggle", { connector_name: connectorName });
+      
+      // Refetch to get updated state from backend
+      const response = await api.get("/connectors/");
+      const backendConnectors = response.data.connectors || [];
+      
+      const mapped: ConnectorConfig[] = backendConnectors.map((c: any, i: number) => ({
+        id: `${c.connector_type}-${i + 1}`,
+        type: c.connector_type,
+        name: c.name,
+        status: c.is_connected ? "connected" as const : "disconnected" as const,
+        config: {},
+        lastSync: c.is_connected ? new Date().toISOString() : undefined,
+      }));
+      
+      set({ connectors: mapped, isLoading: false });
+    } catch (err: any) {
+      const message = err.response?.data?.detail || "Toggle failed";
+      set({ error: message, isLoading: false });
     }
   },
 
   updateLLMConfig: async (config: LLMConfig) => {
     set({ isLoading: true, error: null });
     try {
-      // Simulate backend update
-      await new Promise(resolve => setTimeout(resolve, 400));
+      // LLM config is currently stored client-side
+      // TODO: POST /settings/llm once backend supports it
       set({ llmConfig: config, isLoading: false });
     } catch (err) {
       set({ error: (err as Error).message, isLoading: false });
